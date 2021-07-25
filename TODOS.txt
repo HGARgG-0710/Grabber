@@ -1,0 +1,3 @@
+1. Separate functions from the actual use code. 
+2. Fix the grabP function
+3. Fix the fact, that first element of pElements array is missing (probably due to different page structure).

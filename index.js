@@ -181,7 +181,6 @@ const handle = setInterval(() => {
 
 emmiter.on("handler is dead", () => {
 	emmiter.on("async", () => {
-		console.log(neededHrefs[1][0][0])
 		clearLinksText(filenames)
 
 		neededHrefs.forEach(async (toplevel, index) => {
@@ -193,25 +192,31 @@ emmiter.on("handler is dead", () => {
 					if (awaited.length > 0) pElements[index].push(awaited)
 				})
 			})
-			if (index === 1) setTimeout(() => emmiter.emit("finished"), 2000)
+			if (index === 1) setTimeout(() => emmiter.emit("finished"), 10)
 		})
 
 		emmiter.on("finished", () => {
 			const sync = setInterval(() => {
-				console.log(pElements[1].length)
-				if (pElements[1].length > 0) {
-					pElements.forEach((section, index) => {
-						section.forEach((node) => {
-							filesContents[index].push(grabP(node))
+				let length = pElements.length
+				setTimeout(() => {
+					isGrowing = length < pElements.length
+					console.log(pElements.length)
+					if (!isGrowing) {
+						pElements.forEach((section, index) => {
+							section.forEach((node) => {
+								filesContents[index].push(grabP(node))
+							})
 						})
-					})
 
-					clearInterval(sync)
-					console.log(filesContents)
-				}
-			}, 5000)
+						clearInterval(sync)
+						console.log(filesContents)
+					}
+				}, 1000)
+			}, 50)
 		})
 	})
+
+	let isGrowing = true
 
 	const filenames = [[], []]
 	const filesContents = [[], []]
