@@ -1,0 +1,10 @@
+{
+	"type": "module",
+	"dependencies": {
+		"browserless": "^9.1.5",
+		"html-get": "^2.9.0",
+		"math-expressions.js": "^0.3.0",
+		"node-html-parser": "^4.1.0",
+		"puppeteer": "^10.1.0"
+	}
+}
