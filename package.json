@@ -3,7 +3,7 @@
 	"dependencies": {
 		"browserless": "^9.1.5",
 		"html-get": "^2.9.0",
-		"math-expressions.js": "^0.3.0",
+		"math-expressions.js": "^0.4.1",
 		"node-html-parser": "^4.1.0",
 		"npm-install-missing": "^0.1.4",
 		"puppeteer": "^10.1.0"
