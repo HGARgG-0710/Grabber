@@ -16,9 +16,7 @@ import {
 	getNeededHrefs,
 } from "./src/grabber.js"
 
-import getHTML from "html-get"
-import pk from "browserless"
-const { createBrowserless } = pk
+import { writeFile } from "fs"
 
 const htmls = [[], []]
 const mainPageURLS = Object.freeze([
@@ -46,10 +44,11 @@ mainPageURLS.forEach(async (page, index) => {
 								page
 							).then((received) => {
 								neededHrefs[index].push(received)
-								if (i === mainPage.length - 1)
-									setTimeout(() => {
-										stepTwo()
-									}, 1)
+								if (
+									i === mainPage.length - 1 &&
+									index === mainPageURLS.length - 1
+								)
+									setTimeout(() => collectFileData(), 1)
 							})
 						})
 					})
@@ -59,7 +58,28 @@ mainPageURLS.forEach(async (page, index) => {
 	})
 })
 
-function stepTwo() {
+function collectFileData() {
+	function writeFileData() {
+		function validate(filepath) {
+			for (let i = 0; i < filepath.length; i++) {
+				if (filepath[i] === "\t" || filepath[i] === "\n")
+					filepath[i] = " "
+			}
+		}
+
+		filenames[0].forEach((pageSection, sectionIndex) => {
+			pageSection.forEach((file, fileIndex) => {
+				writeFile(
+					"out/0/" + validate(file) + ".txt",
+					String(filesContents[0][sectionIndex][fileIndex]),
+					(err) => {
+						if (err) throw err
+					}
+				)
+			})
+		})
+	}
+
 	htmls.forEach((mainPage, i) => {
 		mainPage.forEach((page, j) => {
 			filenames[i].push(getLinksText(neededHrefs[i][j], page))
@@ -83,6 +103,8 @@ function stepTwo() {
 										filesContents[index].push(grabP(node))
 									})
 								})
+
+								writeFileData()
 							}
 						})
 					})

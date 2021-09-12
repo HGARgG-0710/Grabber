@@ -1,1 +1,2 @@
-1. Add documentation for the grabber functions. 
+1. Do something with the 1st element of the pElement array not loading because of canonical links.
+2. Add documentation for the grabber functions. 
